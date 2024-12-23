@@ -1,21 +1,21 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 
-import 'Signup.dart';
-
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpState extends State<SignUp> {
   bool _isPasswordVisible = false;
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  String _selectedCountryCode = '+1';
 
   @override
   Widget build(BuildContext context) {
@@ -26,21 +26,16 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Logo and "Your Doctor" Text
-
-            Image.asset('assets/images/bluelogo.png',
-                height: 100), // Add your logo image path
+            Image.asset('assets/images/bluelogo.png', height: 100),
             const SizedBox(height: 10),
             const Text('Your Doctor',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-
             const SizedBox(height: 40),
-
-            // Email Label and Email Field
             const Align(
               alignment: Alignment.centerLeft,
               child: Text('Email', style: TextStyle(fontSize: 16)),
             ),
+            const SizedBox(height: 10),
             TextField(
               controller: _emailController,
               decoration: const InputDecoration(
@@ -50,12 +45,60 @@ class _LoginPageState extends State<LoginPage> {
                     EdgeInsets.symmetric(vertical: 15, horizontal: 10),
               ),
             ),
-
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Column(
+                  children: [
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text('Code', style: TextStyle(fontSize: 16)),
+                    ),
+                    const SizedBox(height: 10),
+                    CountryCodePicker(
+                      onChanged: (code) {
+                        setState(() {
+                          _selectedCountryCode = code.dialCode!;
+                        });
+                      },
+                      initialSelection: '+1',
+                      favorite: const ['+1', '+91'],
+                      showCountryOnly: false,
+                      showOnlyCountryWhenClosed: false,
+                      alignLeft: false,
+                    ),
+                  ],
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    children: [
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text('Mobile Phone',
+                            style: TextStyle(fontSize: 16)),
+                      ),
+                      const SizedBox(height: 10),
+                      TextField(
+                        controller: _phoneController,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter your phone number',
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 10),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: 20),
             const Align(
               alignment: Alignment.centerLeft,
               child: Text('Password', style: TextStyle(fontSize: 16)),
             ),
+            const SizedBox(height: 10),
             TextField(
               controller: _passwordController,
               obscureText: !_isPasswordVisible,
@@ -79,23 +122,10 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-
             const SizedBox(height: 20),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {
-                  // Implement your forgot password functionality here
-                },
-                child: const Text('Forgot Password?',
-                    style: TextStyle(color: Color.fromARGB(255, 22, 101, 165))),
-              ),
-            ),
             SizedBox(
               width: double.infinity,
-              child:
-                  // Inside Obx to react to changes in loading value
-                  ElevatedButton(
+              child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 22, 101, 165),
@@ -104,25 +134,23 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 child: const Text(
-                  'SignIn',
+                  'SignUp',
                   style: TextStyle(color: Colors.white),
                 ),
               ),
             ),
-
             const SizedBox(height: 20),
             const Text('Or Continue With', style: TextStyle(fontSize: 16)),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                // Facebook Button with Label
                 Container(
                   height: 40,
                   width: MediaQuery.of(context).size.width * 0.4,
                   decoration: BoxDecoration(
-                    color: Colors.white, // White background
-                    borderRadius: BorderRadius.circular(8), // Rounded corners
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.3),
@@ -131,15 +159,13 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ),
-                  padding:
-                      const EdgeInsets.all(8), // Padding inside the container
+                  padding: const EdgeInsets.all(8),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       FaIcon(FontAwesomeIcons.facebook,
                           size: 20, color: Colors.blue),
-
-                      SizedBox(width: 8), // Space between icon and label
+                      SizedBox(width: 8),
                       Text(
                         'Facebook',
                         style: TextStyle(color: Colors.blue, fontSize: 16),
@@ -147,15 +173,12 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-
-                // Google Button with Label
                 Container(
                   width: MediaQuery.of(context).size.width * 0.4,
                   height: 40,
-
                   decoration: BoxDecoration(
-                    color: Colors.white, // White background
-                    borderRadius: BorderRadius.circular(8), // Rounded corners
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.3),
@@ -164,15 +187,13 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ),
-                  padding:
-                      const EdgeInsets.all(8), // Padding inside the container
+                  padding: const EdgeInsets.all(8),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       FaIcon(FontAwesomeIcons.google,
                           size: 20, color: Colors.red),
-
-                      SizedBox(width: 8), // Space between icon and label
+                      SizedBox(width: 8),
                       Text(
                         'Google',
                         style: TextStyle(color: Colors.red, fontSize: 16),
@@ -186,12 +207,10 @@ class _LoginPageState extends State<LoginPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("You don't have an account? "),
+                const Text("You have account already?"),
                 TextButton(
-                  onPressed: () {
-                    Get.to(() => const SignUp());
-                  },
-                  child: const Text('Sign Up',
+                  onPressed: () {},
+                  child: const Text('Sign in',
                       style:
                           TextStyle(color: Color.fromARGB(255, 22, 101, 165))),
                 ),
