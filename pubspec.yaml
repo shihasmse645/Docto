@@ -39,6 +39,8 @@ dependencies:
   get: ^4.6.6
   country_code_picker: ^3.1.0
   shared_preferences: ^2.3.4
+  google_fonts: ^6.2.1
+  intl: ^0.20.1
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +71,13 @@ flutter:
     - assets/images/logos.png
     - assets/images/dl.png
     - assets/images/bluelogo.png
+    - assets/images/user.png
+    - assets/images/offers.png
+    - assets/images/offerbg.png
+    - assets/doctors/
+
+
+
 
 
 
